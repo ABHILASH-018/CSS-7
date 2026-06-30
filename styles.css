@@ -1,201 +1,306 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+/* ============================================================
+   styles.css — Laundry Wallah Landing Page
+   ============================================================
+   This stylesheet covers three main things:
+     1. A basic page reset and layout
+     2. Header navigation styling
+     3. The hero section with a CTA button that uses CSS
+        transforms (scale + rotate) on hover
+   ============================================================ */
+
+
+/* --- Global Reset ---
+   I'm using the universal selector (*) to remove all default
+   browser margins and padding. 'box-sizing: border-box' makes
+   padding count inside the element width, which saves me from
+   a lot of math headaches when laying things out.
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-body{
-    background:#fff;
-    color:#333;
+body {
+    background: #fff;
+    color: #333;
 }
 
-.container{
-    width:90%;
-    max-width:1200px;
-    margin:auto;
+/* --- Container ---
+   Keeps everything centered and prevents the content from
+   stretching too wide on big monitors. 90% width gives
+   some breathing room on the sides.
+*/
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
 }
 
-/* Header */
 
-.header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:30px 0;
+/* ============================================================
+   HEADER / NAVIGATION
+   ============================================================ */
+
+/* Using flexbox here to spread the logo, nav links, and user
+   button across the header in a single horizontal row. */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 0;
 }
 
-.logo{
-    font-size:30px;
-    font-weight:700;
-    color:#1f2937;
+.logo {
+    font-size: 30px;
+    font-weight: 700;
+    color: #1f2937;
 }
 
-.nav ul{
-    display:flex;
-    gap:30px;
-    list-style:none;
+/* Removing bullet points from the nav list and laying
+   the links out horizontally with a gap between them. */
+.nav ul {
+    display: flex;
+    gap: 30px;
+    list-style: none;
 }
 
-.nav a{
-    text-decoration:none;
-    color:#666;
-    font-weight:500;
-    transition:color .3s;
+/* Nav link styling — starts as grey, transitions smoothly
+   to blue on hover. I picked 0.3s because it feels snappy
+   but not instant. */
+.nav a {
+    text-decoration: none;
+    color: #666;
+    font-weight: 500;
+    transition: color 0.3s;
 }
 
 .nav a:hover,
-.nav .active{
-    color:#0095ff;
+.nav .active {
+    color: #0095ff;
 }
 
-.user-btn a{
-    text-decoration:none;
-    background:#e6f4ff;
-    color:#0095ff;
-    padding:12px 24px;
-    border-radius:12px;
-    font-weight:600;
+/* The username button in the top-right — styled as a soft
+   pill-shaped link with a light blue tint. */
+.user-btn a {
+    text-decoration: none;
+    background: #e6f4ff;
+    color: #0095ff;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
 }
 
-/* Hero */
 
-.hero-section{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    align-items:center;
-    gap:50px;
-    padding:60px 0;
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+
+/* I'm using CSS Grid with two equal columns here so the text
+   and image sit side-by-side. The gap keeps them from
+   being too cramped together. */
+.hero-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 50px;
+    padding: 60px 0;
 }
 
-.hero-title{
-    font-size:48px;
-    line-height:1.2;
-    color:#334155;
+.hero-title {
+    font-size: 48px;
+    line-height: 1.2;
+    color: #334155;
 }
 
-.hero-title span{
-    color:#0095ff;
+/* The accent color on "Laundry Services!" to draw the
+   reader's eye to the key phrase. */
+.hero-title span {
+    color: #0095ff;
 }
 
-.hero-description{
-    margin:25px 0;
-    color:#666;
-    line-height:1.7;
-    max-width:520px;
+.hero-description {
+    margin: 25px 0;
+    color: #666;
+    line-height: 1.7;
+    max-width: 520px;
 }
 
-/* Button */
 
-.btn-primary{
-    display:inline-block;
-    background:#0095ff;
-    color:#fff;
-    text-decoration:none;
-    padding:16px 34px;
-    border-radius:18px;
-    font-weight:600;
-    transition:
-        transform .3s ease,
-        background-color .3s ease,
-        box-shadow .3s ease;
+/* ============================================================
+   BUTTON HOVER EFFECTS — scale() and rotate()
+   ============================================================
+
+   This is the core of the assignment. Here's what I learned:
+
+   HOW scale() WORKS:
+     - scale(1.08) makes the button 8% bigger than its
+       original size in both X and Y directions.
+     - scale(0.98) shrinks it slightly — I use this on :active
+       to simulate a "press down" feeling.
+     - A value of 1 = normal size, above 1 = bigger, below 1 = smaller.
+
+   HOW rotate() WORKS:
+     - rotate(3deg) tilts the button 3 degrees clockwise.
+     - Positive values go clockwise, negative go anti-clockwise.
+     - I kept it at 3deg because anything above ~5deg starts
+       looking wobbly and unprofessional.
+
+   WHY COMBINE THEM IN ONE transform PROPERTY:
+     - CSS only allows ONE transform property per selector.
+       If I wrote them on separate lines, the second one would
+       overwrite the first. So I chain them together like:
+         transform: scale(1.08) rotate(3deg);
+     - The browser applies them right-to-left internally,
+       but visually the result is the same — the button grows
+       AND tilts at the same time.
+
+   THE transition PROPERTY:
+     - Without 'transition', the hover effect would snap
+       instantly. Adding 'transition: transform 0.3s ease'
+       tells the browser to animate smoothly over 0.3 seconds.
+     - I also transition background-color and box-shadow so
+       everything changes together, not just the shape.
+*/
+
+.btn-primary {
+    display: inline-block;
+    background: #0095ff;
+    color: #fff;
+    text-decoration: none;
+    padding: 16px 34px;
+    border-radius: 18px;
+    font-weight: 600;
+
+    /* Transitioning three properties at once so the color,
+       shadow, and transform all animate together smoothly. */
+    transition: transform 0.3s ease,
+                background-color 0.3s ease,
+                box-shadow 0.3s ease;
 }
 
-.btn-primary:hover{
-    background:#0084e0;
-    transform:scale(1.08) rotate(3deg);
-    box-shadow:0 8px 18px rgba(0,149,255,.25);
+/* HOVER STATE:
+   - Darkening the background slightly so the user can tell
+     something changed even without the animation.
+   - scale(1.08) makes the button pop out towards the user.
+   - rotate(3deg) adds a playful tilt — this subtle touch
+     makes the interaction feel more alive than just scaling.
+   - The box-shadow creates a soft glow underneath, giving
+     the illusion that the button is lifting off the page. */
+.btn-primary:hover {
+    background: #0084e0;
+    transform: scale(1.08) rotate(3deg);
+    box-shadow: 0 8px 18px rgba(0, 149, 255, 0.25);
 }
 
-.btn-primary:active{
-    transform:scale(.98);
+/* ACTIVE STATE (when the user clicks and holds):
+   - scale(0.98) shrinks the button just below its normal
+     size, which mimics a real physical button being pressed.
+   - I removed the rotate here so the click feels direct
+     and snappy, not tilted. */
+.btn-primary:active {
+    transform: scale(0.98);
 }
 
-.hero-image{
-    display:flex;
-    justify-content:center;
+/* Centering the washing machine image */
+.hero-image {
+    display: flex;
+    justify-content: center;
 }
 
-.hero-image img{
-    width:430px;
-    max-width:100%;
+.hero-image img {
+    width: 430px;
+    max-width: 100%;
 }
 
-/* Footer */
 
-.footer{
-    text-align:center;
-    padding:30px 0;
-    color:#777;
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+    text-align: center;
+    padding: 30px 0;
+    color: #777;
 }
 
-/* Responsive */
 
-@media(max-width:992px){
+/* ============================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================
+   These media queries adjust the layout for tablets and phones.
+   I picked 992px, 768px, and 576px because they roughly match
+   common device widths (iPad, smaller tablets, phones).
+*/
 
-    .hero-title{
-        font-size:40px;
+/* Tablets and smaller laptops */
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 40px;
     }
 
-    .hero-image img{
-        width:360px;
+    .hero-image img {
+        width: 360px;
     }
-
 }
 
-@media(max-width:768px){
-
-    .container{
-        width:92%;
+/* Tablets in portrait and large phones */
+@media (max-width: 768px) {
+    .container {
+        width: 92%;
     }
 
-    .header{
-        flex-wrap:wrap;
-        gap:15px;
+    .header {
+        flex-wrap: wrap;
+        gap: 15px;
     }
 
-    .nav ul{
-        gap:18px;
+    .nav ul {
+        gap: 18px;
     }
 
-    .hero-section{
-        grid-template-columns:1fr;
-        text-align:center;
+    /* Stacking the hero into a single column so the text
+       comes first, then the image below it. */
+    .hero-section {
+        grid-template-columns: 1fr;
+        text-align: center;
     }
 
-    .hero-content{
-        display:flex;
-        flex-direction:column;
-        align-items:center;
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
-    .hero-description{
-        max-width:100%;
+    .hero-description {
+        max-width: 100%;
     }
-
 }
 
-@media(max-width:576px){
-
-    .nav{
-        display:none;
+/* Small phones */
+@media (max-width: 576px) {
+    /* Hiding the nav on very small screens since there's
+       no room — ideally I'd add a hamburger menu here. */
+    .nav {
+        display: none;
     }
 
-    .header{
-        justify-content:space-between;
+    .header {
+        justify-content: space-between;
     }
 
-    .hero-title{
-        font-size:30px;
+    .hero-title {
+        font-size: 30px;
     }
 
-    .hero-image img{
-        width:260px;
+    .hero-image img {
+        width: 260px;
     }
 
-    .btn-primary{
-        width:100%;
-        text-align:center;
+    /* Making the button full-width on phones so it's
+       easy to tap with a thumb. */
+    .btn-primary {
+        width: 100%;
+        text-align: center;
     }
-
 }
