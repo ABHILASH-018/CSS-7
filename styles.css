@@ -1,20 +1,17 @@
-/* ============================================================
-   styles.css — Laundry Wallah Landing Page
-   ============================================================
-   This stylesheet covers three main things:
-     1. A basic page reset and layout
+/* 
+   CSS Assignment 7 — Button Hover Effects
+   Project: Laundry Wallah Landing Page
+   
+   This stylesheet covers:
+     1. Page resets and container layout
      2. Header navigation styling
-     3. The hero section with a CTA button that uses CSS
-        transforms (scale + rotate) on hover
-   ============================================================ */
-
-
-/* --- Global Reset ---
-   I'm using the universal selector (*) to remove all default
-   browser margins and padding. 'box-sizing: border-box' makes
-   padding count inside the element width, which saves me from
-   a lot of math headaches when laying things out.
+     3. Hero grid layout
+     4. Button transforms & hover effects (scale + rotate)
 */
+
+
+/* Resetting default margins and padding so the layout behaves consistently across browsers.
+   I also set border-box so padding doesn't mess up my width calculations. */
 * {
     margin: 0;
     padding: 0;
@@ -27,11 +24,7 @@ body {
     color: #333;
 }
 
-/* --- Container ---
-   Keeps everything centered and prevents the content from
-   stretching too wide on big monitors. 90% width gives
-   some breathing room on the sides.
-*/
+/* Keep the site content centered with a max-width so it doesn't look stretched out on huge screens */
 .container {
     width: 90%;
     max-width: 1200px;
@@ -39,12 +32,9 @@ body {
 }
 
 
-/* ============================================================
-   HEADER / NAVIGATION
-   ============================================================ */
+/* HEADER & NAVIGATION */
 
-/* Using flexbox here to spread the logo, nav links, and user
-   button across the header in a single horizontal row. */
+/* Flexbox to line up the logo, links, and profile button horizontally */
 .header {
     display: flex;
     justify-content: space-between;
@@ -58,17 +48,14 @@ body {
     color: #1f2937;
 }
 
-/* Removing bullet points from the nav list and laying
-   the links out horizontally with a gap between them. */
+/* Remove standard bullet points and space out nav links */
 .nav ul {
     display: flex;
     gap: 30px;
     list-style: none;
 }
 
-/* Nav link styling — starts as grey, transitions smoothly
-   to blue on hover. I picked 0.3s because it feels snappy
-   but not instant. */
+/* Clean styling for nav links. Added color transition so the hover change isn't sudden. */
 .nav a {
     text-decoration: none;
     color: #666;
@@ -81,8 +68,7 @@ body {
     color: #0095ff;
 }
 
-/* The username button in the top-right — styled as a soft
-   pill-shaped link with a light blue tint. */
+/* Styled the username in the top right to look like a small pill button */
 .user-btn a {
     text-decoration: none;
     background: #e6f4ff;
@@ -93,13 +79,9 @@ body {
 }
 
 
-/* ============================================================
-   HERO SECTION
-   ============================================================ */
+/* HERO SECTION */
 
-/* I'm using CSS Grid with two equal columns here so the text
-   and image sit side-by-side. The gap keeps them from
-   being too cramped together. */
+/* Using CSS grid for two columns: text on left, washing machine image on right */
 .hero-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -114,8 +96,7 @@ body {
     color: #334155;
 }
 
-/* The accent color on "Laundry Services!" to draw the
-   reader's eye to the key phrase. */
+/* Highlight text color for the span word */
 .hero-title span {
     color: #0095ff;
 }
@@ -128,43 +109,37 @@ body {
 }
 
 
-/* ============================================================
-   BUTTON HOVER EFFECTS — scale() and rotate()
-   ============================================================
-
-   This is the core of the assignment. Here's what I learned:
-
-   HOW scale() WORKS:
-     - scale(1.08) makes the button 8% bigger than its
-       original size in both X and Y directions.
-     - scale(0.98) shrinks it slightly — I use this on :active
-       to simulate a "press down" feeling.
-     - A value of 1 = normal size, above 1 = bigger, below 1 = smaller.
-
-   HOW rotate() WORKS:
-     - rotate(3deg) tilts the button 3 degrees clockwise.
-     - Positive values go clockwise, negative go anti-clockwise.
-     - I kept it at 3deg because anything above ~5deg starts
-       looking wobbly and unprofessional.
-
-   WHY COMBINE THEM IN ONE transform PROPERTY:
-     - CSS only allows ONE transform property per selector.
-       If I wrote them on separate lines, the second one would
-       overwrite the first. So I chain them together like:
-         transform: scale(1.08) rotate(3deg);
-     - The browser applies them right-to-left internally,
-       but visually the result is the same — the button grows
-       AND tilts at the same time.
-
-   THE transition PROPERTY:
-     - Without 'transition', the hover effect would snap
-       instantly. Adding 'transition: transform 0.3s ease'
-       tells the browser to animate smoothly over 0.3 seconds.
-     - I also transition background-color and box-shadow so
-       everything changes together, not just the shape.
+/* 
+   THE BUTTON HOVER ANIMATION (Assignment Core)
+   
+   Struggles & What I learned:
+   1. Chaining transforms:
+      Initially, I tried declaring them separately like:
+        transform: scale(1.08);
+        transform: rotate(3deg);
+      But the rotate completely overrode the scale! I found out that you can only
+      have one transform line per block. So I had to chain them together:
+        transform: scale(1.08) rotate(3deg);
+      This fixed it so the button scales up and tilts simultaneously.
+      
+   2. Inline element issue:
+      The button is an <a> tag. At first, the padding and transforms looked slightly
+      off and overlapped other content. I remembered that <a> tags are inline,
+      so I had to change display to inline-block so margin/padding and transforms behave.
+      
+   3. Transition chaining:
+      I wanted the hover background color and shadow to fade smoothly along with the scale/rotate.
+      I had to list all three properties in the transition declaration so they'd sync up:
+      transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+      
+   4. The Click State (:active):
+      I scaled the button down to 0.98 to make it feel pressed down when clicked.
+      I originally kept the rotate(3deg) on the clicked state too, but it felt extremely
+      wobbly and weird under the mouse click. So I removed the rotate on active, 
+      keeping only the scale change. It feels much sturdier.
 */
 
-.btn-primary {
+.book-btn {
     display: inline-block;
     background: #0095ff;
     color: #fff;
@@ -173,33 +148,21 @@ body {
     border-radius: 18px;
     font-weight: 600;
 
-    /* Transitioning three properties at once so the color,
-       shadow, and transform all animate together smoothly. */
+    /* Transitioning multiple properties at once so colors, shadows, and shape scale together */
     transition: transform 0.3s ease,
-                background-color 0.3s ease,
-                box-shadow 0.3s ease;
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
-/* HOVER STATE:
-   - Darkening the background slightly so the user can tell
-     something changed even without the animation.
-   - scale(1.08) makes the button pop out towards the user.
-   - rotate(3deg) adds a playful tilt — this subtle touch
-     makes the interaction feel more alive than just scaling.
-   - The box-shadow creates a soft glow underneath, giving
-     the illusion that the button is lifting off the page. */
-.btn-primary:hover {
+/* Hover state: scale button up slightly, tilt it slightly, darken color, and add a shadow glow */
+.book-btn:hover {
     background: #0084e0;
     transform: scale(1.08) rotate(3deg);
     box-shadow: 0 8px 18px rgba(0, 149, 255, 0.25);
 }
 
-/* ACTIVE STATE (when the user clicks and holds):
-   - scale(0.98) shrinks the button just below its normal
-     size, which mimics a real physical button being pressed.
-   - I removed the rotate here so the click feels direct
-     and snappy, not tilted. */
-.btn-primary:active {
+/* Active click state: shrink slightly to mimic a real button click without tilting */
+.book-btn:active {
     transform: scale(0.98);
 }
 
@@ -215,9 +178,7 @@ body {
 }
 
 
-/* ============================================================
-   FOOTER
-   ============================================================ */
+/* FOOTER */
 .footer {
     text-align: center;
     padding: 30px 0;
@@ -225,13 +186,8 @@ body {
 }
 
 
-/* ============================================================
-   RESPONSIVE BREAKPOINTS
-   ============================================================
-   These media queries adjust the layout for tablets and phones.
-   I picked 992px, 768px, and 576px because they roughly match
-   common device widths (iPad, smaller tablets, phones).
-*/
+/* RESPONSIVE LAYOUT BREAKPOINTS
+   Adjusting grid and margins for tablet and mobile views. */
 
 /* Tablets and smaller laptops */
 @media (max-width: 992px) {
@@ -259,8 +215,7 @@ body {
         gap: 18px;
     }
 
-    /* Stacking the hero into a single column so the text
-       comes first, then the image below it. */
+    /* Stack columns vertically on tablets so the content reads top-to-bottom */
     .hero-section {
         grid-template-columns: 1fr;
         text-align: center;
@@ -279,8 +234,9 @@ body {
 
 /* Small phones */
 @media (max-width: 576px) {
-    /* Hiding the nav on very small screens since there's
-       no room — ideally I'd add a hamburger menu here. */
+
+    /* I hid the middle navigation links here on mobile to avoid overlapping the logo.
+       Ideally, I'd build a hamburger menu, but this keeps the header layout clean for now. */
     .nav {
         display: none;
     }
@@ -297,9 +253,8 @@ body {
         width: 260px;
     }
 
-    /* Making the button full-width on phones so it's
-       easy to tap with a thumb. */
-    .btn-primary {
+    /* Make button full width on small phones so it's easier to tap with a thumb */
+    .book-btn {
         width: 100%;
         text-align: center;
     }

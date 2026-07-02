@@ -5,25 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laundry Wallah | Premium Dry Cleaning & Laundry Services</title>
     
-    <!-- Importing the primary stylesheet containing the button hover animations -->
+    <!-- Linking my main CSS styles -->
     <link rel="stylesheet" href="styles.css">
     
-    <!-- Using Google Fonts for clean, modern typography -->
+    <!-- Importing Poppins from Google Fonts so the page doesn't use default browser fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Main container to constrain the maximum width on wide desktop screens -->
+    <!-- Container to center the page content and stop it from stretching too wide on huge monitors -->
     <div class="container">
 
-        <!-- Navigation Bar / Header -->
+        <!-- Header area for the logo, nav links, and username -->
         <header class="header">
             <!-- Brand Logo -->
             <div class="logo">
                 Laundry Wallah
             </div>
 
-            <!-- Main navigation menu -->
+            <!-- Main navigation menu links -->
             <nav class="nav">
                 <ul>
                     <li><a href="#" class="active">Home</a></li>
@@ -33,16 +33,16 @@
                 </ul>
             </nav>
 
-            <!-- User account/profile button -->
+            <!-- Top right profile button -->
             <div class="user-btn">
                 <a href="#">Username</a>
             </div>
         </header>
 
-        <!-- Hero / Showcase Section -->
+        <!-- Main hero banner section -->
         <main class="hero-section">
             
-            <!-- Text content and call-to-action details -->
+            <!-- Left side: Main text and the CTA book button -->
             <div class="hero-content">
                 <h1 class="hero-title">
                     Revitalize Your <br>
@@ -57,25 +57,25 @@
                 </p>
 
                 <!-- 
-                  This is the primary CTA button. 
-                  It uses the '.btn-primary' class, which is configured in styles.css 
-                  to showcase the combined effects of 'scale()' and 'rotate()' on hover.
+                  This is the main book button.
+                  I used the class .book-btn so I can animate it in styles.css.
+                  Hovering scales it up and tilts it. Clicking shrinks it.
                 -->
                 <div class="hero-cta">
-                    <a href="#" class="btn-primary">
+                    <a href="#" class="book-btn">
                         Book a service today!
                     </a>
                 </div>
             </div>
 
-            <!-- Hero visual image element -->
+            <!-- Right side: Washing machine graphic image -->
             <div class="hero-image">
                 <img src="washingmachine.png" alt="Laundry Washing Machine illustration">
             </div>
 
         </main>
 
-        <!-- Simple copyright footer -->
+        <!-- Footer -->
         <footer class="footer">
             <p>&copy; 2026 Laundry Wallah. All rights reserved.</p>
         </footer>

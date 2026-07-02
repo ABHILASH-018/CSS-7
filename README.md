@@ -1,78 +1,64 @@
-# CSS-7 — Button Hover Effects with CSS Transforms
+# CSS Assignment 7: Button Hover Effects with CSS Transforms
 
-## About This Project
+## What this project is about
+For this assignment, I built a simple landing page for a fictional laundry service called **Laundry Wallah**. The main goal was to practice using CSS `transform` properties, specifically combining `scale()` and `rotate()` to make a cool hover effect on a button. 
 
-This is a simple landing page for **Laundry Wallah**, a fictional laundry service. The main goal of this assignment was to learn how CSS `transform` functions — specifically `scale()` and `rotate()` — can be combined to create engaging button hover effects.
-
-The page has a header with navigation, a hero section with a call-to-action button, and a footer. The button is where all the transform magic happens.
-
----
-
-## How to Set Up and View
-
-1. **Download or clone** this repository to your computer.
-2. Make sure all three files are in the same folder:
-   - `index.html`
-   - `styles.css`
-   - `washingmachine.png`
-3. **Open `index.html`** in any web browser (Chrome, Firefox, Edge, etc.) by double-clicking it.
-4. **Hover over the blue "Book a service today!" button** to see the transform effects in action.
-5. **Click and hold** the button to see the `:active` press-down effect.
-
-No build tools, servers, or installations needed — it's just plain HTML and CSS.
+I've got a header, a hero section with a big button, and a simple footer. The button is where I did all the transform tests.
 
 ---
 
-## What I Learned About CSS Transforms
+## How to run it
+1. Make sure `index.html`, `styles.css`, and the `washingmachine.png` image are all in the same folder.
+2. Just double-click `index.html` to open it in Chrome or any browser.
+3. Hover your mouse over the blue "Book a service today!" button to see it scale up and tilt.
+4. If you click and hold it, it shrinks down slightly to feel like an actual click.
 
-### `scale()` — Making Things Bigger or Smaller
+---
 
-- `scale(1)` keeps the element at its normal size.
-- `scale(1.08)` makes it 8% larger — I used this on hover to make the button feel like it's popping towards you.
-- `scale(0.98)` makes it slightly smaller — I used this on `:active` (when you click and hold) to simulate a button being physically pressed down.
+## What I learned & what confused me (My Learning Process)
 
-### `rotate()` — Tilting an Element
+I'm actually really proud of how the button turned out, but I ran into a few annoying issues while building this:
 
-- `rotate(3deg)` tilts the element 3 degrees clockwise.
-- Positive values go clockwise, negative values go counter-clockwise.
-- I kept the rotation small (3 degrees) because anything bigger looks sloppy on a button. It just adds a subtle playful touch.
-
-### Combining Them Together
-
-The key thing I learned is that **you can only have one `transform` property per selector**. If you try to write two separate `transform` lines, the second one will overwrite the first. So to use both, you chain them:
-
+### 1. The "Overwriting Transforms" Trap
+At first, I tried to write my CSS like this because it made logical sense to separate them:
+```css
+.btn-primary:hover {
+    transform: scale(1.08);
+    transform: rotate(3deg);
+}
+```
+But when I hovered, the button *only* rotated and didn't scale up at all. I spent about 15 minutes trying to figure out why the scale wasn't working. Then I realized (after some googling) that CSS doesn't merge transform declarations—the second `transform` property just completely overwrote the first one. 
+To fix it, I had to chain them on the same line:
 ```css
 transform: scale(1.08) rotate(3deg);
 ```
+Once I did that, it worked perfectly!
 
-This applies both effects at the same time — the button grows *and* tilts when you hover over it.
-
-### Making It Smooth with `transition`
-
-Without `transition`, the hover effect snaps instantly — it doesn't look good. Adding this line:
-
+### 2. Getting the animation to look smooth
+Without transition, the button just snapped instantly to the new size and angle. It looked super janky and cheap. 
+I added:
 ```css
 transition: transform 0.3s ease;
 ```
+That made the growth and rotation smooth. But then I realized the hover background color change (`#0095ff` to `#0084e0`) and the shadow were still snapping instantly while the shape was animating slowly. It looked really weird.
+To fix it, I ended up chaining multiple transitions in one property:
+```css
+transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+```
+This made all three changes (size/angle, color, and shadow glow) fade in together, which looks way more polished.
 
-...tells the browser to animate the change over 0.3 seconds using an "ease" timing curve (starts slow, speeds up, then slows down at the end). I also transition `background-color` and `box-shadow` so everything changes together.
+### 3. Designing the click (:active) state
+For the click state, I wanted it to feel like you're actually pressing a real button down. I used `scale(0.98)` to shrink it slightly.
+Initially, I left the `rotate(3deg)` on the active state too, but when I tested it in the browser, clicking a tilted button felt really unstable and weird. It didn't feel satisfying. I decided to remove the rotation entirely on `:active` so it snaps back to a straight angle when clicked. It feels much more solid this way.
+
+### 4. Layout & Mobile Issues
+- **Inline vs block element**: I originally just styled the `<a>` tag directly. But I noticed the padding and scale transforms were behaving weirdly (sometimes overlapping other text). I remembered that `<a>` tags are inline by default, so I had to set `display: inline-block` to make the margins/paddings and transforms behave properly.
+- **Mobile Navbar**: When I shrunk the screen, the navbar links were overlapping the logo. Since this is a CSS-only project and I didn't want to write a bunch of complex JavaScript for a hamburger menu, I made a compromise: I hid the middle links on mobile screens (under `576px`) and just kept the logo and username button. It's clean and doesn't break the layout.
+- **Full-width Button**: On mobile, the button was hard to tap, so I added a media query to make it `width: 100%` so you can easily tap it with your thumb.
 
 ---
 
-## File Structure
-
-```
-CSS-7/
-├── index.html          — The page structure (HTML)
-├── styles.css          — All styling and hover animations (CSS)
-├── washingmachine.png  — Hero section image
-└── README.md           — This file
-```
-
----
-
-## Technologies Used
-
-- HTML5
-- CSS3 (Transforms, Transitions, Flexbox, Grid)
-- Google Fonts (Poppins)
+## Files in the project
+- `index.html` - The structure of the page (with my notes).
+- `styles.css` - Where all the styles, flexbox layout, and button transform/transitions live.
+- `washingmachine.png` - The graphic illustration in the hero section.
